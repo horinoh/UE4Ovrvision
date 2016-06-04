@@ -27,7 +27,10 @@ public class UE4Ovrvision : ModuleRules
 
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			var ModulePath = Path.GetDirectoryName(RulesCompiler.GetModuleFilename(GetType().Name));
+			FileReference FR;
+            UProjectInfo.TryGetProjectForTarget("UE4Ovrvision", out FR);
+            RulesAssembly RA = RulesCompiler.CreateProjectRulesAssembly(FR);
+            var ModulePath = Path.GetDirectoryName(RA.GetModuleFileName(GetType().Name).CanonicalName);
 			var ThirdPartyPath = Path.GetFullPath(Path.Combine(ModulePath, "..", "..", "ThirdParty"));
 
 			var Name = "ovrvisionsdk_windows";
