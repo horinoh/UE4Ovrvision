@@ -2,7 +2,9 @@
 
 #pragma once
 
+#include "Windows/PreWindowsApi.h"
 #include <ovrvision.h>
+#include "Windows/PostWindowsApi.h"
 
 #include "Components/ActorComponent.h"
 #include "OvrvisionComponent.generated.h"
