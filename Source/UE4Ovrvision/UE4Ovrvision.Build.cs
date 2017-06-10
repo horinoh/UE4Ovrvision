@@ -5,7 +5,7 @@ using System.IO;
 
 public class UE4Ovrvision : ModuleRules
 {
-	public UE4Ovrvision(TargetInfo Target)
+	public UE4Ovrvision(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
 															"RHI", "RenderCore" });
