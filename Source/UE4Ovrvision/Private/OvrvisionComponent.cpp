@@ -71,7 +71,6 @@ void UOvrvisionComponent::TickComponent( float DeltaTime, ELevelTick TickType, F
 				UOvrvisionComponent*, This, this,
 				UTexture2D*, Tex, Texture2D,
 				{
-					//!< カメラ画像を取得
 					//!< Get camera image
 					This->OvrvisionInst->PreStoreCamData();
 					auto LeftImage = This->OvrvisionInst->GetCamImage(OVR::OV_CAMEYE_LEFT/*, OVR::OV_PSQT_LOW*/);
@@ -82,7 +81,6 @@ void UOvrvisionComponent::TickComponent( float DeltaTime, ELevelTick TickType, F
 					const auto Height = This->OvrvisionInst->GetImageHeight();
 					const auto BPP = This->OvrvisionInst->GetPixelSize();
 
-					//!< カメラ画像は 24ビットカラー(RGB) で取得されるので、32ビットカラー(FColor)配列へ変換する
 					//!< Because camera image is 24bit color(RGB), convert to 32bit color(FColor)
 					TArray<FColor> Source;
 					Source.Reserve(Width2 * Height);
@@ -100,7 +98,6 @@ void UOvrvisionComponent::TickComponent( float DeltaTime, ELevelTick TickType, F
 						}
 					}
 
-					//!< テクスチャを更新
 					//!< update texture
 					const auto Pitch = GPixelFormats[Tex->GetPixelFormat()].BlockBytes * Width2;
 					RHIUpdateTexture2D(Tex->Resource->TextureRHI->GetTexture2D(), 0, FUpdateTextureRegion2D(0, 0, 0, 0, Width2, Height), Pitch, reinterpret_cast<const uint8*>(&Source[0]));
