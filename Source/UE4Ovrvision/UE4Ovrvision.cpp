@@ -7,7 +7,7 @@ class FOvrvisionGameModuleImpl : public FDefaultGameModuleImpl
 public:
 	virtual void StartupModule()
 	{
-		const auto DllRoot = FPaths::GameContentDir() / TEXT("../ThirdParty/ovrvisionsdk_windows/bin") / (PLATFORM_64BITS ? TEXT("x64/") : TEXT("x86/"));
+		const auto DllRoot = FPaths::ProjectConfigDir() / TEXT("../ThirdParty/ovrvisionsdk_windows/bin") / (PLATFORM_64BITS ? TEXT("x64/") : TEXT("x86/"));
 		FPlatformProcess::PushDllDirectory(*DllRoot);
 		{
 #if UE_BUILD_DEBUG
