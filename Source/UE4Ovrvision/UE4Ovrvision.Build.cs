@@ -2,10 +2,15 @@
 
 using UnrealBuildTool;
 using System.IO;
-using Tools.DotNETCommon;
+//using Tools.DotNETCommon;
 
 public class UE4Ovrvision : ModuleRules
 {
+    private string ThirdPartyPath
+    {
+        get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "..", "..", "ThirdParty")); }
+    }
+
 	public UE4Ovrvision(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
@@ -28,12 +33,6 @@ public class UE4Ovrvision : ModuleRules
 
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			FileReference FR;
-            UProjectInfo.TryGetProjectForTarget("UE4Ovrvision", out FR);
-            RulesAssembly RA = RulesCompiler.CreateProjectRulesAssembly(FR);
-            var ModulePath = Path.GetDirectoryName(RA.GetModuleFileName(GetType().Name).CanonicalName);
-			var ThirdPartyPath = Path.GetFullPath(Path.Combine(ModulePath, "..", "..", "ThirdParty"));
-
 			var Name = "ovrvisionsdk_windows";
 			var Platform = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
 			var LibPath = Path.Combine(ThirdPartyPath, Name, "bin", Platform);
