@@ -18,20 +18,22 @@ public class UE4Ovrvision : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-		// if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
-		// {
-		//		if (UEBuildConfiguration.bCompileSteamOSS == true)
-		//		{
-		//			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
-		//		}
-		// }
+        PrivatePCHHeaderFile = "UE4Ovrvision.h";
 
-		if (Target.Platform == UnrealTargetPlatform.Win64)
+        // Uncomment if you are using Slate UI
+        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+
+        // Uncomment if you are using online features
+        // PrivateDependencyModuleNames.Add("OnlineSubsystem");
+        // if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
+        // {
+        //		if (UEBuildConfiguration.bCompileSteamOSS == true)
+        //		{
+        //			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
+        //		}
+        // }
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			var Name = "ovrvisionsdk_windows";
 			var Platform = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";

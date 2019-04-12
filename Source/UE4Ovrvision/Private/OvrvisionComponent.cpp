@@ -67,19 +67,18 @@ void UOvrvisionComponent::TickComponent( float DeltaTime, ELevelTick TickType, F
 	{
 		if (nullptr != Texture2D)
 		{
-			ENQUEUE_UNIQUE_RENDER_COMMAND_TWOPARAMETER(UpdateTexture2D,
-				UOvrvisionComponent*, This, this,
-				UTexture2D*, Tex, Texture2D,
+			ENQUEUE_RENDER_COMMAND(UpdateTexture2D)(
+				[Tex = Texture2D, this](FRHICommandListImmediate& RHICmdList)
 				{
 					//!< Get camera image
-					This->OvrvisionInst->PreStoreCamData();
-					auto LeftImage = This->OvrvisionInst->GetCamImage(OVR::OV_CAMEYE_LEFT/*, OVR::OV_PSQT_LOW*/);
-					auto RightImage = This->OvrvisionInst->GetCamImage(OVR::OV_CAMEYE_RIGHT/*, OVR::OV_PSQT_LOW*/);
+					OvrvisionInst->PreStoreCamData();
+					auto LeftImage = OvrvisionInst->GetCamImage(OVR::OV_CAMEYE_LEFT/*, OVR::OV_PSQT_LOW*/);
+					auto RightImage = OvrvisionInst->GetCamImage(OVR::OV_CAMEYE_RIGHT/*, OVR::OV_PSQT_LOW*/);
 
-					const auto Width = This->OvrvisionInst->GetImageWidth();
+					const auto Width = OvrvisionInst->GetImageWidth();
 					const auto Width2 = Width << 1;
-					const auto Height = This->OvrvisionInst->GetImageHeight();
-					const auto BPP = This->OvrvisionInst->GetPixelSize();
+					const auto Height = OvrvisionInst->GetImageHeight();
+					const auto BPP = OvrvisionInst->GetPixelSize();
 
 					//!< Because camera image is 24bit color(RGB), convert to 32bit color(FColor)
 					TArray<FColor> Source;
@@ -101,8 +100,7 @@ void UOvrvisionComponent::TickComponent( float DeltaTime, ELevelTick TickType, F
 					//!< update texture
 					const auto Pitch = GPixelFormats[Tex->GetPixelFormat()].BlockBytes * Width2;
 					RHIUpdateTexture2D(Tex->Resource->TextureRHI->GetTexture2D(), 0, FUpdateTextureRegion2D(0, 0, 0, 0, Width2, Height), Pitch, reinterpret_cast<const uint8*>(&Source[0]));
-				}
-			);
+				});
 		}
 	}
 }
